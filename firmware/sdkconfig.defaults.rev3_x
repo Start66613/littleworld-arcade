@@ -1,0 +1,6 @@
+# ESP32-P4 rev3.x-family compatibility profile (the actual board reports silicon v3.2).
+# Source: waveshareteam/ESP32-P4-WIFI6-Touch-LCD-7B config/esp32p4_rev3_x.defaults
+#         @ 9fcd49a8c927a00f5583c22d568b3448addbe51c
+# CONFIG_ESP32P4_SELECTS_REV_LESS_V3 is not set
+CONFIG_ESP32P4_REV_MIN_300=y
+CONFIG_ESPTOOLPY_FLASHSIZE_32MB=y

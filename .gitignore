@@ -1,0 +1,24 @@
+# Build output (kept on D: outside the source tree)
+/build/
+/firmware/build/
+
+# ESP-IDF generated configuration and downloaded managed components
+/firmware/sdkconfig
+/firmware/sdkconfig.old
+/firmware/managed_components/
+/firmware/dependencies.lock
+
+# Local tool payloads (fonts and the font rasteriser are fetched, not vendored)
+/tools/fonts/node_modules/
+/tools/fonts/cache/
+/tools/fonts/package-lock.json
+
+# Logs and generated reports stay local
+/reports/logs/*.log
+/reports/logs/*.txt
+
+# Never commit firmware images or device dumps here; they live under build/ and
+# under the private backup directory outside this repository.
+*.bin
+*.elf
+*.map

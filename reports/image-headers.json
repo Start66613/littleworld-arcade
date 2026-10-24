@@ -1,0 +1,73 @@
+[
+  {
+    "path": "D:\\LittleWorld-Arcade\\build\\little_world_arcade.bin",
+    "name": "little_world_arcade.bin",
+    "size": 954784,
+    "sha256": "235fe26b57c1a87e7e24c608ce9f01cf7f83908a1f31d8c4653c03017f34cd13",
+    "magic": 233,
+    "segments": 9,
+    "chip_id": 18,
+    "chip": "esp32p4",
+    "min_chip_rev_full": 300,
+    "max_chip_rev_full": 399,
+    "flash_mode_field": 2,
+    "flash_mode": "DIO",
+    "flash_size_field": 5,
+    "flash_size": "32MB",
+    "flash_freq_field": 15,
+    "entry_point": "0x4ff403d2"
+  },
+  {
+    "path": "D:\\LittleWorld-Arcade\\build\\bootloader\\bootloader.bin",
+    "name": "bootloader.bin",
+    "size": 22016,
+    "sha256": "898718125626f8395c5425307f2fa0f5335befd47698f551feb03280fcf0efac",
+    "magic": 233,
+    "segments": 3,
+    "chip_id": 18,
+    "chip": "esp32p4",
+    "min_chip_rev_full": 300,
+    "max_chip_rev_full": 399,
+    "flash_mode_field": 2,
+    "flash_mode": "DIO",
+    "flash_size_field": 5,
+    "flash_size": "32MB",
+    "flash_freq_field": 15,
+    "entry_point": "0x4ffac2c0"
+  },
+  {
+    "name": "partition-table.bin",
+    "kind": "partition_table",
+    "entries": [
+      {
+        "name": "nvs",
+        "type": 1,
+        "subtype": 2,
+        "offset": 36864,
+        "size": 24576
+      },
+      {
+        "name": "phy_init",
+        "type": 1,
+        "subtype": 1,
+        "offset": 61440,
+        "size": 4096
+      },
+      {
+        "name": "factory",
+        "type": 0,
+        "subtype": 0,
+        "offset": 65536,
+        "size": 6291456
+      },
+      {
+        "name": "storage",
+        "type": 1,
+        "subtype": 130,
+        "offset": 6356992,
+        "size": 2097152
+      }
+    ],
+    "sha256": "3b05e4d7a6ee48240f16eb33d0180ea752a111e9d33bbeb700e338537647e03b"
+  }
+]

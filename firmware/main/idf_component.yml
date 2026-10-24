@@ -1,0 +1,10 @@
+## Little World Arcade component manifest.
+## Versions are pinned to the exact set already compiled and verified on this machine
+## by the formal Little World project (reports/environment.md).
+dependencies:
+  idf: ">=5.5"
+  waveshare/esp32_p4_wifi6_touch_lcd_7b:
+    version: "==3.0.1"
+  lvgl/lvgl:
+    version: "==9.5.0"
+    public: true
