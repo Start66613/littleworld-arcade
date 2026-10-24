@@ -1,0 +1,72 @@
+{
+  "file": "D:\\Espressif\\LittleWorld\\private\\backups\\LittleWorld\\20261025-005021\\p4-full-A.bin",
+  "size": 33554432,
+  "sha256": "de8ce1e4b7e212f3588c4ecd25df00e65341c3b25facbfa304178764df2e292f",
+  "size_ok": true,
+  "bootloader": {
+    "offset": 8192,
+    "chip": "esp32p4",
+    "segments": 3,
+    "min_rev_full": 301,
+    "max_rev_full": 399
+  },
+  "partition_table": [
+    {
+      "name": "nvsfactory",
+      "type": "data",
+      "subtype": "nvs",
+      "offset": "0x9000",
+      "size": "0x32000"
+    },
+    {
+      "name": "nvs",
+      "type": "data",
+      "subtype": "nvs",
+      "offset": "0x3b000",
+      "size": "0xd2000"
+    },
+    {
+      "name": "otadata",
+      "type": "data",
+      "subtype": "ota",
+      "offset": "0x10d000",
+      "size": "0x2000"
+    },
+    {
+      "name": "phy_init",
+      "type": "data",
+      "subtype": "phy",
+      "offset": "0x10f000",
+      "size": "0x1000"
+    },
+    {
+      "name": "model",
+      "type": "data",
+      "subtype": "spiffs",
+      "offset": "0x110000",
+      "size": "0xf0000"
+    },
+    {
+      "name": "factory",
+      "type": "app",
+      "subtype": "factory",
+      "offset": "0x200000",
+      "size": "0x800000"
+    },
+    {
+      "name": "storage",
+      "type": "data",
+      "subtype": "spiffs",
+      "offset": "0xa00000",
+      "size": "0x600000"
+    }
+  ],
+  "table_offset": 32768,
+  "app": {
+    "offset": 2097152,
+    "chip": "esp32p4",
+    "segments": 8,
+    "min_rev_full": 301,
+    "max_rev_full": 399
+  }
+}

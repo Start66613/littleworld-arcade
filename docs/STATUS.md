@@ -34,12 +34,40 @@
    app `2608038f…`、bootloader `765585dd…`。它能把设备恢复成可运行的原厂 Brookesia 桌面，
    但不是逐字节的原厂固件。详见 `docs/RECOVERY.md`。
 
-## 备份进度（进行中）
+## 备份进度：**已完成并通过校验**
 
-- 921600 波特率单次整片读取失败：`Corrupt data, expected 0x1000 bytes but received 0xfc0`（USB 串口链路不稳）。
-- 已改为 **4 MiB 分块 + 每块最多 3 次重试 + 失败自动降到 230400** 的双遍读取（`tools/backup_flash.ps1`），
-  当前正在执行，输出目录 `D:\Espressif\LittleWorld\private\backups\LittleWorld\<时间戳>`。
-- 只有两遍 SHA-256 完全一致才会写 `manifest.json` 并标记为已验证。
+- 目录：`D:\Espressif\LittleWorld\private\backups\LittleWorld\20261025-005021\`
+- `p4-full-A.bin` 与 `p4-full-B.bin` 均为 33,554,432 字节，两次独立读取 SHA-256 完全一致：
+  `de8ce1e4b7e212f3588c4ecd25df00e65341c3b25facbfa304178764df2e292f`
+- 耗时 22 分钟（460800、esptool stub、4 MiB 分块、每段 ≤2 MiB、自动重试与断点续读）。
+- 校验：`tools/check_backup.py` 解析出完整引导链，`manifest.json` 标记 `verified`。
+
+### 实测出厂布局（来自备份，与官方文档不同）
+
+| 分区 | 偏移 | 大小 |
+|---|---|---|
+| bootloader | 0x2000 | 镜像头 v3.1–v3.99（**是 rev3 固件**） |
+| 分区表 | **0x8000** | — |
+| nvsfactory | 0x9000 | 0x32000 |
+| nvs | 0x3B000 | 0xD2000 |
+| otadata | 0x10D000 | 0x2000 |
+| phy_init | 0x10F000 | 0x1000 |
+| model (spiffs) | 0x110000 | 0xF0000 |
+| factory (app) | 0x200000 | 0x800000 |
+| storage (spiffs) | 0xA00000 | 0x600000 |
+
+即：**实板出厂固件本身就是 rev3 编译的**，出厂分区表在 0x8000（不是文档里 `firmware/brookesia` 说的 0x9000）。
+这与“官方预编译 FactoryOnly.bin 是 v1.99、刷不进去”并不矛盾——那个文件不是这块板子上的固件。
+
+因为本工程的分区表（nvs 0x9000 / factory 0x10000）与出厂布局完全不同，
+**任何回滚都必须整片恢复**，不能只重刷 app。
+
+### 备份过程中的问题与解决（已记录）
+
+- 921600 单次整片读取：`Corrupt data, expected 0x1000 received 0xfc0`。
+- 460800 单次整片读取：每次传到约 3.5 MiB 就停滞（与波特率无关，是**单次 ROM 会话的传输上限**）。
+- 最终方案：4 MiB 分块、每块拆成 ≤2 MiB 的独立 ROM 会话、每段带硬超时（无进度 90 秒即杀）、
+  最多 4 次重试、连续失败降到 230400、已完成块断点复用。
 
 ## 下一步（按顺序）
 
