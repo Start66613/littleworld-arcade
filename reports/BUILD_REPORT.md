@@ -1,61 +1,53 @@
-# Little World Arcade v0.1 — 构建与验证报告
+# Little World Arcade — 构建与验证报告
 
-日期：2026-10-25（Asia/Shanghai）
-结论：**本机编译通过、主机单元测试通过、镜像修订检查通过；未进行板上测试。**
+> 本文件由 `tools/make_build_report.ps1` 从当前构建产物生成，请勿手改。生成时间：2026-10-25 01:48:15 +08:00
 
-## 1. 交付物
+源码版本：`c7817ed` (working tree has 33 uncommitted change(s))
+
+## 1. 产物
 
 | 文件 | 大小 | SHA-256 |
 |---|---|---|
-| `build/little_world_arcade.bin` | 955,056 B | `0b3979cb542508407e9e7c414b5e3ecc2ddd70febf35a17b0ec2ead6878d0257` |
-| `build/bootloader/bootloader.bin` | 22,016 B | `898718125626f8395c5425307f2fa0f5335befd47698f551feb03280fcf0efac` |
-| `build/partition_table/partition-table.bin` | 3,072 B | `3b05e4d7a6ee48240f16eb33d0180ea752a111e9d33bbeb700e338537647e03b` |
+| `little_world_arcade.bin` | 956256 B | `2044e51811906535c6044e5268cbffcf49046c2c309d2451399823f8b9847516` |
+| `bootloader.bin` | 22016 B | `898718125626f8395c5425307f2fa0f5335befd47698f551feb03280fcf0efac` |
+| `partition-table.bin` | 3072 B | `3b05e4d7a6ee48240f16eb33d0180ea752a111e9d33bbeb700e338537647e03b` |
 
-源码版本：本仓库提交 `7bfdfc2`（Little World Arcade v0.1）。
-依赖：ESP-IDF v5.5.5、BSP 3.0.1、LVGL 9.5.0、esp_lvgl_adapter 0.6.4、`esp32p4_rev3_x.defaults`。
+## 2. 镜像头（由 tools/image_check.py 离线解析）
 
-## 2. 镜像修订检查（工具：`tools/image_check.py`）
+- `little_world_arcade.bin`: chip **esp32p4**, revision **v3.0 .. v3.99**, flash 32MB
+- `bootloader.bin`: chip **esp32p4**, revision **v3.0 .. v3.99**, flash 32MB
 
-```
-PASS  little_world_arcade.bin
-      chip            : esp32p4 (id 0x0012)
-      chip revision   : v3.0 (300) .. v3.99 (399)
-      flash           : 32MB
-      size / sha256   : 955056 bytes / 0b3979cb...878d0257
-PASS  bootloader.bin
-      chip            : esp32p4 (id 0x0012)
-      chip revision   : v3.0 (300) .. v3.99 (399)
-      flash           : 32MB
-      size / sha256   : 22016 bytes / 89871812...cf0efac
-INFO  partition-table.bin
-      nvs        offset=0x009000 size=0x006000
-      phy_init   offset=0x00F000 size=0x001000
-      factory    offset=0x010000 size=0x600000
-      storage    offset=0x610000 size=0x200000
-```
+Partition table:
+  - partition `nvs` offset 0x009000 size 0x006000
+  - partition `phy_init` offset 0x00F000 size 0x001000
+  - partition `factory` offset 0x010000 size 0x600000
+  - partition `storage` offset 0x610000 size 0x200000
 
-实板 silicon v3.2 对应 302，落在 `[300, 399]` 区间内；官方预编译 `FactoryOnly.bin` 的上限是 199，这正是它无法启动的原因。
+实板 ESP32-P4 silicon **v3.2 = 302**，落在 `[300, 399]` 内，说明本镜像允许在这块板上启动。
+官方预编译 `FactoryOnly.bin` 的上限是 199，这正是它无法启动的原因。
 
-## 3. 主机单元测试（`tools/run_host_tests.ps1`，MSVC x64 /W4 /WX）
+## 3. 本机验证
 
-```
-1393 checks, 0 failure(s)
-HOST TESTS PASSED
+| 检查 | 命令 | 结果 |
+|---|---|---|
+| 主机单元测试（游戏规则） | `tools/run_host_tests.ps1` | 1393 项检查通过 |
+| 中文字体覆盖 | `tools/check_fonts.py` | 116 个非 ASCII 字符，22/28 px 全部覆盖 |
+| 镜像头 / 芯片修订 | `tools/image_check.py` | 见第 2 节 |
+| 界面渲染与交互回归 | `tools/run_sim.ps1` | 18 张截图，21 次开合无对象增长，无崩溃 |
+
+一条命令复跑前三项：
+
+```powershell
+pwsh -NoProfile -ExecutionPolicy Bypass -File tools/verify.ps1
 ```
 
-覆盖：
-- 2048：四种方向的合并规则、单次合并限制、得分、胜利（1024+1024）、无路可走、初始两格、随机生成不覆盖已有格。
-- 贪吃蛇：初始长度/朝向、禁止反向、两步输入队列、吃食物增长与计分、速度下限、撞墙、追尾合法/咬身死亡、食物不刷在身体上。
-- 打砖块：初始 60 砖 3 命、发球、左右墙/顶棚反弹、砖块命中判定与得分、挡板反弹带角度、掉球扣命、三条命结束、清屏通关、2000 帧内不出界。
-- 存档：编解码往返、CRC-32 已知答案、损坏字节/错误魔数/错误长度/错误版本全部拒绝、最高分与局数统计。
+## 4. 未执行的验证
 
-## 4. 未执行的验证（明确列出）
-
-- 实板启动、屏幕显示、触摸坐标、帧率、内存稳定性、NVS 断电保持：**未执行**（需要刷机）。
-- 固件写入、整片备份：见 `docs/RECOVERY.md` 的当前状态与 `docs/DEVICE_TEST.md` 的验收清单。
-- 音频输出：v1 不含。
+- 实板启动、屏幕显示、触摸坐标、帧率、内存稳定性、NVS 断电保持：**未执行**（尚未刷机）。
+- 音频输出：v1 不含（音效开关只持久化偏好）。
+- 固件写入本身：等待用户对这一次写入的明确许可。
 
 ## 5. 结论边界
 
-本次“通过”只代表：源码能编译、规则逻辑在主机上正确、产物的芯片/修订/Flash 配置与实板匹配。
-它不代表屏幕能亮、触摸能用、游戏在设备上流畅。任何相反的说法都需要实板证据。
+“本机编译通过”只代表源码可编译、规则逻辑在主机上正确、镜像头与实板芯片匹配；
+不代表屏幕能亮、触摸能用、游戏在设备上流畅。任何相反说法都需要实板证据。

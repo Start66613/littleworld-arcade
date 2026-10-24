@@ -35,27 +35,19 @@ pwsh -NoProfile -ExecutionPolicy Bypass -File tools/build.ps1 -Clean     # 全�
 `build.ps1` 会把 `SDKCONFIG_DEFAULTS` 设为 `sdkconfig.defaults;sdkconfig.defaults.rev3_x`（在 `activate_env.ps1` 中），
 因此**不要**在没有激活环境的情况下直接 `idf.py build`，否则可能生成不带修订限制的镜像。
 
-## 3. 结果（2026-10-25 00:41 构建）
+## 3. 结果
 
-| 产物 | 大小 | SHA-256 |
-|---|---|---|
-| `little_world_arcade.bin` | 955,056 B | `0b3979cb542508407e9e7c414b5e3ecc2ddd70febf35a17b0ec2ead6878d0257` |
-| `bootloader.bin` | 22,016 B | `898718125626f8395c5425307f2fa0f5335befd47698f551feb03280fcf0efac` |
-| `partition-table.bin` | 3,072 B | `3b05e4d7a6ee48240f16eb33d0180ea752a111e9d33bbeb700e338537647e03b` |
+产物大小、SHA-256、镜像头与分区表**由脚本从磁盘上的文件生成**，见
+[`reports/BUILD_REPORT.md`](../reports/BUILD_REPORT.md)
+（每次构建后运行 `pwsh -NoProfile -ExecutionPolicy Bypass -File tools/make_build_report.ps1` 刷新）。
 
-镜像头（`tools/image_check.py` 离线解析）：
+当前关键结论（2026-10-25）：
 
-```
-little_world_arcade.bin : chip esp32p4 (0x0012), revision v3.0(300)..v3.99(399), flash 32MB
-bootloader.bin          : chip esp32p4 (0x0012), revision v3.0(300)..v3.99(399), flash 32MB
-partition table         : nvs 0x009000/0x6000, phy_init 0x00F000/0x1000,
-                          factory 0x010000/0x600000, storage 0x610000/0x200000
-```
-
-实板是 v3.2 = 302，落在 `[300, 399]` 内 → **修订检查通过**（这正是官方 v1.99 镜像失败的那一项）。
-
-分区表偏移 0x8000，bootloader 从 0x2000 起 22,016 字节（结束于 0x7600），未与分区表重叠。
-应用占用 955,056 B，factory 分区 6 MiB，剩余约 85%。
+- 应用镜像与 bootloader 的芯片修订窗口都是 **v3.0 – v3.99**，覆盖实板 v3.2（302）——这正是官方
+  `FactoryOnly.bin`（上限 v1.99）失败的那一项；
+- 目标 `esp32p4`，Flash 配置 32 MB；
+- 分区表在 `0x8000`；`factory` 位于 `0x10000`、大小 6 MiB，应用约占 0.91 MiB；
+- bootloader 22,016 B，从 `0x2000` 起，结束于 `0x7600`，不与分区表重叠。
 
 完整机器可读结果：`reports/image-headers.json`。构建日志：`reports/logs/build-*.log`（本地，不入库）。
 

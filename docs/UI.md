@@ -38,23 +38,26 @@ tick 速率这一项用来在实板上判断“UI 线程有没有被游戏循环
 
 ![贪吃蛇](screenshots/06-snake.png)
 
-![贪吃蛇暂停](screenshots/08-snake-paused.png)
+![贪吃蛇结束](screenshots/07-snake-game-over.png)
+
+![贪吃蛇暂停](screenshots/10-snake-paused.png)
 
 - 顶部方向键：左上角的返回箭头与本机的“左方向键”是不同控件，模拟器按坐标点击
+- 撞墙后弹出“游戏结束”，显示本局得分与最高分（最高分同时出现在顶栏）
 - 暂停浮层三个按钮：继续游戏 / 重新开始 / 返回主页
 
 ## 5. 打砖块
 
-![打砖块](screenshots/12-breakout.png)
+![打砖块](screenshots/13-breakout.png)
 
-![打砖块进行中](screenshots/13-breakout-playing.png)
+![打砖块进行中](screenshots/14-breakout-playing.png)
 
 - 六行彩色砖块、挡板、小球、生命
-- 上图是发球后击中 1 块砖（得分 10、生命 2）的瞬间
+- 上图是发球后击中砖块（得分 10、生命 2）的瞬间
 
 ## 6. 生命周期检查
 
-![开合 20 次后](screenshots/17-after-20-open-close-cycles.png)
+![开合 20 次后](screenshots/18-after-20-open-close-cycles.png)
 
 `tools/run_sim.ps1` 会连续“进入 2048 → 返回主页”21 次并统计活动对象数：
 

@@ -18,7 +18,7 @@ python "$env:IDF_PATH\tools\idf.py" -B D:\LittleWorld-Arcade\build -p COM5 -b 92
 |---|---|---|
 | bootloader | `0x2000` | `build/bootloader/bootloader.bin`（22,016 B） |
 | 分区表 | `0x8000` | `build/partition_table/partition-table.bin` |
-| 应用 | `0x10000` | `build/little_world_arcade.bin`（955,056 B） |
+| 应用 | `0x10000` | `build/little_world_arcade.bin`（约 0.91 MiB，具体哈希见 `reports/BUILD_REPORT.md`） |
 
 不写 C6、不动 eFuse、不整片擦除。
 

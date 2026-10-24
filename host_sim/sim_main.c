@@ -263,46 +263,47 @@ int main(void)
     click_text("贪吃蛇");
     pump(1500);
     shot("06-snake");
+    /* Let it run into the right wall: game-over overlay. */
+    pump(9000);
+    shot("07-snake-game-over");
+    click_text("重新开始");
+    pump(800);
+    shot("08-snake-restarted");
     /* The on-screen D-pad sits in the header: left/up/down/right at this pitch.
      * (Clicking by symbol would be ambiguous with the back arrow.) */
     click(256, 42); /* up */
     pump(700);
     click(352, 42); /* right */
     pump(700);
-    shot("07-snake-turned");
+    shot("09-snake-turned");
     click(922, 42);
     pump(500);
-    shot("08-snake-paused");
+    shot("10-snake-paused");
     click_text("继续游戏");
     pump(700);
-    shot("09-snake-resumed");
-    click(922, 42);
-    pump(400);
-    click_text("重新开始");
-    pump(600);
-    shot("10-snake-restarted");
+    shot("11-snake-resumed");
     click(922, 42);
     pump(400);
     click_text("返回主页");
     pump(800);
-    shot("11-menu-after-snake");
+    shot("12-menu-after-snake");
 
     /* ---- breakout --------------------------------------------------- */
     click_text("打砖块");
     pump(900);
-    shot("12-breakout");
+    shot("13-breakout");
     click(512, 400); /* launch the ball */
     pump(2600);
-    shot("13-breakout-playing");
+    shot("14-breakout-playing");
     drag(700, 470, 260, 470);
     pump(1200);
-    shot("14-breakout-after-drag");
+    shot("15-breakout-after-drag");
     click(922, 42);
     pump(500);
-    shot("15-breakout-paused");
+    shot("16-breakout-paused");
     click_text("继续游戏");
     pump(700);
-    shot("16-breakout-resumed");
+    shot("17-breakout-resumed");
 
     /* ---- screen lifecycle / leak check ------------------------------ */
     click(42, 42); /* back to the menu */
@@ -322,7 +323,7 @@ int main(void)
         pump(700);
     }
     int after_objects = count_objects(lv_screen_active());
-    shot("17-after-20-open-close-cycles");
+    shot("18-after-20-open-close-cycles");
     printf("live objects: after 1 cycle = %d, after 21 cycles = %d\n", base_objects, after_objects);
     if (after_objects != base_objects) {
         printf("FAIL: screen objects leaked across open/close cycles\n");
