@@ -17,6 +17,9 @@
 /reports/logs/*.log
 /reports/logs/*.txt
 
+# Simulator output: BMP intermediates are regenerated, PNGs are kept as documentation
+/reports/screenshots/*.bmp
+
 # Never commit firmware images or device dumps here; they live under build/ and
 # under the private backup directory outside this repository.
 *.bin

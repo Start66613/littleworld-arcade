@@ -7,7 +7,7 @@
 
 | 文件 | 大小 | SHA-256 |
 |---|---|---|
-| `build/little_world_arcade.bin` | 954,912 B | `7b818c1875a40924fe32b55b20eb6707da420e01b6c8feffa59477eecc47609d` |
+| `build/little_world_arcade.bin` | 955,056 B | `0b3979cb542508407e9e7c414b5e3ecc2ddd70febf35a17b0ec2ead6878d0257` |
 | `build/bootloader/bootloader.bin` | 22,016 B | `898718125626f8395c5425307f2fa0f5335befd47698f551feb03280fcf0efac` |
 | `build/partition_table/partition-table.bin` | 3,072 B | `3b05e4d7a6ee48240f16eb33d0180ea752a111e9d33bbeb700e338537647e03b` |
 
@@ -21,7 +21,7 @@ PASS  little_world_arcade.bin
       chip            : esp32p4 (id 0x0012)
       chip revision   : v3.0 (300) .. v3.99 (399)
       flash           : 32MB
-      size / sha256   : 954912 bytes / 7b818c18...c47609d
+      size / sha256   : 955056 bytes / 0b3979cb...878d0257
 PASS  bootloader.bin
       chip            : esp32p4 (id 0x0012)
       chip revision   : v3.0 (300) .. v3.99 (399)

@@ -66,7 +66,7 @@ static void overlay_show(int mode, uint32_t score)
     if (mode == 1) {
         lv_label_set_text(s_ui.overlay_title, "已暂停");
         lv_label_set_text(s_ui.overlay_body, "休息一下，准备好再继续～");
-        lv_obj_add_flag(s_ui.btn_continue, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_remove_flag(s_ui.btn_continue, LV_OBJ_FLAG_HIDDEN);
     } else if (mode == 2) {
         lv_label_set_text(s_ui.overlay_title, "游戏结束");
         lv_label_set_text_fmt(s_ui.overlay_body, "本局得分 %u\n最高分 %u", (unsigned)score, best);
@@ -75,6 +75,11 @@ static void overlay_show(int mode, uint32_t score)
         lv_label_set_text(s_ui.overlay_title, "通关啦！");
         lv_label_set_text_fmt(s_ui.overlay_body, "本局得分 %u\n最高分 %u", (unsigned)score, best);
         lv_obj_remove_flag(s_ui.btn_continue, LV_OBJ_FLAG_HIDDEN);
+    }
+
+    lv_obj_t *continue_label = lv_obj_get_child(s_ui.btn_continue, 0);
+    if (continue_label != NULL) {
+        lv_label_set_text(continue_label, (mode == 1) ? "继续游戏" : "继续挑战");
     }
 
     lv_obj_remove_flag(s_ui.overlay, LV_OBJ_FLAG_HIDDEN);

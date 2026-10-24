@@ -39,7 +39,7 @@ pwsh -NoProfile -ExecutionPolicy Bypass -File tools/build.ps1 -Clean     # 全�
 
 | 产物 | 大小 | SHA-256 |
 |---|---|---|
-| `little_world_arcade.bin` | 954,912 B | `7b818c1875a40924fe32b55b20eb6707da420e01b6c8feffa59477eecc47609d` |
+| `little_world_arcade.bin` | 955,056 B | `0b3979cb542508407e9e7c414b5e3ecc2ddd70febf35a17b0ec2ead6878d0257` |
 | `bootloader.bin` | 22,016 B | `898718125626f8395c5425307f2fa0f5335befd47698f551feb03280fcf0efac` |
 | `partition-table.bin` | 3,072 B | `3b05e4d7a6ee48240f16eb33d0180ea752a111e9d33bbeb700e338537647e03b` |
 
@@ -55,7 +55,7 @@ partition table         : nvs 0x009000/0x6000, phy_init 0x00F000/0x1000,
 实板是 v3.2 = 302，落在 `[300, 399]` 内 → **修订检查通过**（这正是官方 v1.99 镜像失败的那一项）。
 
 分区表偏移 0x8000，bootloader 从 0x2000 起 22,016 字节（结束于 0x7600），未与分区表重叠。
-应用占用 954,912 B，factory 分区 6 MiB，剩余约 85%。
+应用占用 955,056 B，factory 分区 6 MiB，剩余约 85%。
 
 完整机器可读结果：`reports/image-headers.json`。构建日志：`reports/logs/build-*.log`（本地，不入库）。
 

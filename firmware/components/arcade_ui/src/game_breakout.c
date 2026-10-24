@@ -20,6 +20,7 @@ static const arcade_game_host_t *s_host;
 static int s_paused;
 static int s_over;
 static uint8_t s_last_lives;
+static uint32_t s_last_score;
 static uint32_t s_last_tick_ms;
 
 static uint32_t row_color(int row)
@@ -82,6 +83,10 @@ static void tick_cb(lv_timer_t *timer)
         s_last_lives = s_model.lives;
         update_lives_hud();
     }
+    if (s_model.score != s_last_score) {
+        s_last_score = s_model.score;
+        s_host->set_score(s_model.score);
+    }
 
     if (s_model.state == ARCADE_STATE_WON) {
         s_over = 1;
@@ -120,6 +125,7 @@ static void create(lv_obj_t *playfield, const arcade_game_host_t *host)
     s_over = 0;
     arcade_breakout_init(&s_model);
     s_last_lives = s_model.lives;
+    s_last_score = s_model.score;
 
     for (int row = 0; row < ARCADE_BREAKOUT_ROWS; row++) {
         for (int col = 0; col < ARCADE_BREAKOUT_COLS; col++) {

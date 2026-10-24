@@ -12,6 +12,9 @@
 | `check_fonts.py` | 校验 UI 用到的每个非 ASCII 字符都在字体里 | 否 | 防止刷机后出现方框 |
 | `image_check.py` | 离线解析镜像头：芯片、修订范围、Flash、分区表 | 否 | 判断“能不能在这块 v3.2 板子上启动” |
 | `verify.ps1` | 依次运行字体检查、主机测试、镜像头检查 | 否 | 一条命令给出总结 |
+| `run_sim.ps1` | 编译并运行 PC 模拟器，导出 17 张截图，做开合泄漏检查 | 否 | 需要 MSVC + Pillow（仅用于转 PNG） |
+| `bmp_to_png.py` | 把模拟器输出的 BMP 转成 PNG | 否 | 需要 Pillow |
+| `check_backup.py` | 离线解析整片备份：bootloader / 分区表 / app | 否 | 备份校验用 |
 | `backup_flash.ps1` | 整片 32 MiB 只读双遍备份（分块、超时、断点续读） | **是（只读）** | 需要用户明确授权；绝不写 Flash |
 
 ## 常用命令
