@@ -12,6 +12,13 @@
 - **不写入、不修改、不覆盖**正式工程里的任何文件；不把实验代码合进正式工程（除非用户另行要求）。
 - 正式工程的安全规则（`C:\Projects\LittleWorld\AGENTS.md`）同样适用。
 
+## 远程仓库与隐私
+- 用户于 2026-10-25 明确要求把本工程上传 GitHub，仓库建成**私有**（`Start66613/littleworld-arcade`）。
+  未获新指示不得改为公开。
+- **永远不进入仓库**：整片 Flash 备份、设备原始串口日志、MAC/凭据、正式工程的 `private/` 内容。
+  备份只存在于 `D:\Espressif\LittleWorld\private\backups\`，由 `.gitignore` 之外的人工纪律保护。
+- 不启用云构建、GitHub Actions 或任何遥测；推送只包含源码、文档、截图与字体子集。
+
 ## 设备写入
 - 默认禁止：flash / erase / 分区改写 / eFuse / C6 固件 / OTA。
 - 每次写入都需要用户**针对这一次**的明确许可；过去的口头许可不延续。
