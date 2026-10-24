@@ -10,7 +10,7 @@
 
 | 项目 | 状态 | 证据 |
 |---|---|---|
-| 独立工程 `D:\LittleWorld-Arcade` | 通过 | Git 本地提交 + 私有 GitHub 远程（用户 2026-10-25 要求）|
+| 独立工程 `D:\LittleWorld-Arcade` | 通过 | Git 本地提交 + 公开 GitHub 远程（用户 2026-10-25 要求）|
 | 游戏规则（arcade_core） | 通过 | `tools/run_host_tests.ps1`：1393 项检查，0 失败 |
 | LVGL 9 界面（菜单/HUD/暂停/结算/最高分/音效开关） | 通过（仅编译） | `firmware/components/arcade_ui/` |
 | 中文字体（Noto Sans SC 子集，114 字） | 通过 | `tools/gen_fonts.ps1`，OFL 文本随附 |

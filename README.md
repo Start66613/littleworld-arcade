@@ -2,6 +2,8 @@
 
 Little World 的独立实验固件：在 **Waveshare ESP32-P4-WIFI6-Touch-LCD-7B**（7 英寸 1024×600、GT911 触摸、ESP32-P4 v3.2、32 MB Flash）上运行的小游戏厅。
 
+公开仓库：<https://github.com/Start66613/littleworld-arcade>（源码 + 文档 + 模拟器截图；整片固件备份与设备原始日志**不在**仓库里）。
+
 它是正式工程 `C:\Projects\LittleWorld` 的旁支实验，**不修改、不覆盖正式工程**，但复用正式工程已验证的工具链与官方 BSP 版本。
 
 ## 界面预览（PC 模拟器真实渲染）

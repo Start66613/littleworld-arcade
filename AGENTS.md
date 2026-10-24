@@ -13,8 +13,8 @@
 - 正式工程的安全规则（`C:\Projects\LittleWorld\AGENTS.md`）同样适用。
 
 ## 远程仓库与隐私
-- 用户于 2026-10-25 明确要求把本工程上传 GitHub，仓库建成**私有**（`Start66613/littleworld-arcade`）。
-  未获新指示不得改为公开。
+- 用户于 2026-10-25 明确要求把本工程上传 GitHub，并按用户指示于同日把仓库改为**公开**
+  （`Start66613/littleworld-arcade`）。仓库里只有源码、文档、截图与字体子集；新增文件先按下面的规则自检。
 - **永远不进入仓库**：整片 Flash 备份、设备原始串口日志、MAC/凭据、正式工程的 `private/` 内容。
   备份只存在于 `D:\Espressif\LittleWorld\private\backups\`，由 `.gitignore` 之外的人工纪律保护。
 - 不启用云构建、GitHub Actions 或任何遥测；推送只包含源码、文档、截图与字体子集。
