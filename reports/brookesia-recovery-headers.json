@@ -1,0 +1,66 @@
+[
+  {
+    "path": "D:\\Espressif\\LittleWorld\\builds\\arcade-recovery\\brookesia-phone-rev3_x\\esp_brookesia_demo.bin",
+    "name": "esp_brookesia_demo.bin",
+    "size": 3356176,
+    "sha256": "2608038fbfcd9141ead7beb3c4c178148a8dd5eecca3c10cf9d63e1ec88330c3",
+    "magic": 233,
+    "segments": 9,
+    "chip_id": 18,
+    "chip": "esp32p4",
+    "min_chip_rev_full": 300,
+    "max_chip_rev_full": 399,
+    "flash_mode_field": 2,
+    "flash_mode": "DIO",
+    "flash_size_field": 5,
+    "flash_size": "32MB",
+    "flash_freq_field": 15,
+    "entry_point": "0x4ff403d2"
+  },
+  {
+    "path": "D:\\Espressif\\LittleWorld\\builds\\arcade-recovery\\brookesia-phone-rev3_x\\bootloader\\bootloader.bin",
+    "name": "bootloader.bin",
+    "size": 22016,
+    "sha256": "765585dda07b5877ee2d941ca55f25bb50c4b18006b9ace9d2e7751ef78ce14d",
+    "magic": 233,
+    "segments": 3,
+    "chip_id": 18,
+    "chip": "esp32p4",
+    "min_chip_rev_full": 300,
+    "max_chip_rev_full": 399,
+    "flash_mode_field": 2,
+    "flash_mode": "DIO",
+    "flash_size_field": 5,
+    "flash_size": "32MB",
+    "flash_freq_field": 15,
+    "entry_point": "0x4ffac2c0"
+  },
+  {
+    "name": "partition-table.bin",
+    "kind": "partition_table",
+    "entries": [
+      {
+        "name": "nvs",
+        "type": 1,
+        "subtype": 2,
+        "offset": 36864,
+        "size": 24576
+      },
+      {
+        "name": "phy_init",
+        "type": 1,
+        "subtype": 1,
+        "offset": 61440,
+        "size": 4096
+      },
+      {
+        "name": "factory",
+        "type": 0,
+        "subtype": 0,
+        "offset": 65536,
+        "size": 9437184
+      }
+    ],
+    "sha256": "cfd5322fe68673d56ef76b761774807cc3c8ffe87b127859aa3abf23fba0783d"
+  }
+]

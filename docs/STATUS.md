@@ -29,6 +29,17 @@
    因此恢复必须来自“本板备份”或“源码重建”。
 3. **可重复的 v3.2 构建链已建立**：固定 IDF 5.5.5 + BSP 3.0.1 + LVGL 9.5.0 + `esp32p4_rev3_x.defaults`，
    并新增离线镜像头校验工具 `tools/image_check.py`（不再依赖“编译成功”这种弱证据）。
+4. **兜底恢复镜像已构建**：官方 `11_esp_brookesia_phone`（rev3 配置）本机编译通过，
+   镜像头 `v3.0–v3.99`，分区偏移与本工程一致（0x2000 / 0x8000 / 0x10000），
+   app `2608038f…`、bootloader `765585dd…`。它能把设备恢复成可运行的原厂 Brookesia 桌面，
+   但不是逐字节的原厂固件。详见 `docs/RECOVERY.md`。
+
+## 备份进度（进行中）
+
+- 921600 波特率单次整片读取失败：`Corrupt data, expected 0x1000 bytes but received 0xfc0`（USB 串口链路不稳）。
+- 已改为 **4 MiB 分块 + 每块最多 3 次重试 + 失败自动降到 230400** 的双遍读取（`tools/backup_flash.ps1`），
+  当前正在执行，输出目录 `D:\Espressif\LittleWorld\private\backups\LittleWorld\<时间戳>`。
+- 只有两遍 SHA-256 完全一致才会写 `manifest.json` 并标记为已验证。
 
 ## 下一步（按顺序）
 

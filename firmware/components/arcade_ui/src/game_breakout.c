@@ -20,6 +20,7 @@ static const arcade_game_host_t *s_host;
 static int s_paused;
 static int s_over;
 static uint8_t s_last_lives;
+static uint32_t s_last_tick_ms;
 
 static uint32_t row_color(int row)
 {
@@ -57,7 +58,24 @@ static void tick_cb(lv_timer_t *timer)
     if (s_paused || s_over) {
         return;
     }
-    arcade_breakout_tick(&s_model);
+
+    /* LVGL runs the timer once per handler pass, so a slow frame would otherwise
+     * slow the ball down. Advance as many fixed 16 ms steps as actually elapsed
+     * (capped so a long stall cannot teleport the ball through bricks). */
+    uint32_t now = lv_tick_get();
+    uint32_t elapsed = now - s_last_tick_ms;
+    if (elapsed < ARCADE_BREAKOUT_TICK_MS) {
+        return;
+    }
+    uint32_t steps = elapsed / ARCADE_BREAKOUT_TICK_MS;
+    if (steps > 3) {
+        steps = 3;
+    }
+    s_last_tick_ms += steps * ARCADE_BREAKOUT_TICK_MS;
+
+    for (uint32_t i = 0; i < steps; i++) {
+        arcade_breakout_tick(&s_model);
+    }
     refresh_view();
 
     if (s_model.lives != s_last_lives) {
@@ -144,7 +162,8 @@ static void create(lv_obj_t *playfield, const arcade_game_host_t *host)
     lv_obj_add_event_cb(playfield, pointer_cb, LV_EVENT_PRESSING, NULL);
 
     refresh_view();
-    s_timer = lv_timer_create(tick_cb, ARCADE_BREAKOUT_TICK_MS, NULL);
+    s_last_tick_ms = lv_tick_get();
+    s_timer = lv_timer_create(tick_cb, ARCADE_BREAKOUT_TICK_MS / 2, NULL);
 
     host->set_score(0);
     update_lives_hud();
@@ -163,6 +182,9 @@ static void destroy(void)
 static void set_paused(int paused)
 {
     s_paused = paused;
+    if (!paused) {
+        s_last_tick_ms = lv_tick_get(); /* do not catch up on paused time */
+    }
     if (s_timer == NULL) {
         return;
     }

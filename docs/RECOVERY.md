@@ -30,8 +30,30 @@
 
 不包含：ESP32-C6 自身的固件/Flash、P4 eFuse/密钥、PSRAM 内容、SD 卡。
 
-### B. 官方源码重建的原厂桌面（功能等价，不保证逐字节一致）——**尚未构建**
-两个候选：
+### B. 官方源码重建的原厂桌面（功能等价，不保证逐字节一致）——**已在本机构建并校验**
+
+已实际构建：`examples/esp-idf/11_esp_brookesia_phone`（官方示例，`sdkconfig.defaults` 本身已是 rev3 配置）。
+构建目录 `D:\Espressif\LittleWorld\builds\arcade-recovery\brookesia-phone-rev3_x`，源码副本在
+`D:\Espressif\LittleWorld\work\brookesia-phone-rev3`（不污染官方 checkout）。
+
+| 产物 | 大小 | SHA-256 | 修订头 |
+|---|---|---|---|
+| `esp_brookesia_demo.bin` | 3,356,176 B | `2608038fbfcd9141ead7beb3c4c178148a8dd5eecca3c10cf9d63e1ec88330c3` | v3.0–v3.99 |
+| `bootloader.bin` | 22,016 B | `765585dda07b5877ee2d941ca55f25bb50c4b18006b9ace9d2e7751ef78ce14d` | v3.0–v3.99 |
+| `partition-table.bin` | 3,072 B | 见 `reports/brookesia-recovery-headers.json` | — |
+
+关键性质：**它的分区偏移与本工程一致**（bootloader `0x2000`、分区表 `0x8000`、app `0x10000`，
+factory 9 MB），因此刷完 Arcade 之后，用它就能把设备恢复成一个可运行的原厂 Brookesia 桌面，
+**不需要先恢复原分区表**。这让“实验固件刷坏了怎么办”有了一个不依赖备份的兜底。
+
+限制：
+- 它是官方 Brookesia 手机示例界面，与 7B 出厂预装的桌面**不一定逐像素/逐功能相同**；
+  不能声称“这就是原厂固件”。
+- 官方 `firmware/brookesia/`（完整版）需要追加 `config/esp32p4_rev3_x.defaults`，且分区表在 `0x9000`，
+  与上面的镜像布局不同，不能混刷；本轮没有构建它。
+- Wi-Fi、摄像头、音频等完整功能在示例中被裁剪，实板功能需另测。
+
+其它候选：
 
 1. `firmware/brookesia/`（官方仓库内的完整 Brookesia 工程）
    - 官方文档要求：`cd firmware/brookesia && idf.py set-target esp32p4 && idf.py build`
