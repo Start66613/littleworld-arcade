@@ -4,6 +4,8 @@
  */
 #include "ui_internal.h"
 
+#include "esp_log.h"
+
 static const arcade_game_module_t *const s_games[] = {
     &arcade_game_2048,
     &arcade_game_snake,
@@ -193,8 +195,11 @@ void arcade_nav_menu(void)
 
 void arcade_ui_start(void)
 {
+    ESP_LOGI("arcade/ui", "ui: theme + store + diagnostics");
     arcade_theme_init();
     arcade_store_init();
     arcade_diag_start_monitor();
+    ESP_LOGI("arcade/ui", "ui: building the home menu");
     arcade_nav_menu();
+    ESP_LOGI("arcade/ui", "ui: home menu loaded");
 }

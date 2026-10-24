@@ -1,14 +1,14 @@
 # Little World Arcade — 构建与验证报告
 
-> 本文件由 `tools/make_build_report.ps1` 从当前构建产物生成，请勿手改。生成时间：2026-10-25 01:48:15 +08:00
+> 本文件由 `tools/make_build_report.ps1` 从当前构建产物生成，请勿手改。生成时间：2026-10-25 01:49:16 +08:00
 
-源码版本：`c7817ed` (working tree has 33 uncommitted change(s))
+源码版本：`25248fc` (working tree has 3 uncommitted change(s))
 
 ## 1. 产物
 
 | 文件 | 大小 | SHA-256 |
 |---|---|---|
-| `little_world_arcade.bin` | 956256 B | `2044e51811906535c6044e5268cbffcf49046c2c309d2451399823f8b9847516` |
+| `little_world_arcade.bin` | 957792 B | `62890b79bcbfddf7995437f7e497c57b5a624ed04cf507ac0fb2f4911854ba5c` |
 | `bootloader.bin` | 22016 B | `898718125626f8395c5425307f2fa0f5335befd47698f551feb03280fcf0efac` |
 | `partition-table.bin` | 3072 B | `3b05e4d7a6ee48240f16eb33d0180ea752a111e9d33bbeb700e338537647e03b` |
 
